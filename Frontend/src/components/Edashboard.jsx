@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Edashboard.css";
+import { useNavigate } from "react-router-dom";
 import {
   FaTachometerAlt,
   FaUser,
@@ -23,8 +24,10 @@ import {
 
 
 import { Card } from "antd";
+import axios from "axios";
 
 
+const userName = localStorage.getItem("userName") || "Employee";
 
 // const [search, setSearch] = useState("");
 
@@ -35,9 +38,62 @@ const SidebarItem = ({ icon, label, active, onClick }) => (
   </div>
 );
 
-const EDashboard = () => {
+ 
+const userEmail = localStorage.getItem("userEmail") || "";
+
+
+
+
+const Edashboard = () => {
   const [activeTab, setActiveTab] = useState("Dashboard");
   const [search, setSearch] = useState("");
+   const navigate = useNavigate();
+  const [showEdit, setShowEdit] = useState(false);
+  const [profile, setProfile] = useState({
+  name: "",
+  email: "",
+  mobile: "",
+  department: "N/A",
+  designation: "N/A",
+  // DateOfJoining : "23.03.2025"
+ });
+
+ const handleLogoutYes = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/"); // Redirects to HomePage
+  };
+
+  const handleLogoutNo = () => {
+    setActiveTab("Dashboard");
+  }
+const [leaveForm, setLeaveForm] = useState({
+    leaveType: "",
+    fromDate: "",
+    toDate: "",
+    reason: "",
+  });
+  const handleLeaveSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("http://localhost:5000/api/leave/apply", {
+        employeeEmail: userEmail,
+        ...leaveForm,
+      });
+      alert("✅ Leave request submitted!");
+      setLeaveForm({
+        leaveType: "",
+        fromDate: "",
+        toDate: "",
+        reason: "",
+      });
+    } catch (err) {
+      console.error("Leave Submit error",err.response?.data || err.message);
+      
+
+      alert("❌ Failed to submit leave");
+    }
+  };
 
   // --- SECTION RENDERER ---
   const renderContent = () => {
@@ -46,6 +102,8 @@ const EDashboard = () => {
         return (
           <>
             <h2>Employee Dashboard Overview</h2>
+            <h3 style={{marginTop: "-10px", color: "#555"}}>Welcome, {userName} 👋</h3>
+
 
             <div className="stats-grid">
               <div className="card">
@@ -139,29 +197,161 @@ const EDashboard = () => {
           </>
         );
 
+      // case "Profile":
+      //   return (
+      //     <div className="feature-section">
+      //       <h2><FaIdBadge /> Employee Profile</h2>
+      //       <div className="profile-card">
+      //         <img
+      //           src="https://via.placeholder.com/100"
+      //           alt="Profile"
+      //           className="profile-pic"
+      //         />
+      //         <div>
+      //           <h3>Rahul Sharma</h3>
+      //           <p>Software Developer</p>
+      //           <p>EId : 34001</p>
+      //           <p>Email: rahul.sharma@gmail.com</p>
+      //           <p>Mob No : 8365248912</p>
+      //           <p>Department: FrontEnd</p>
+      //           <p>Date of Joining : 17.05.2004</p>
+      //           <button className="btn-edit">Edit Profile</button>
+      //         </div>
+      //       </div>
+      //     </div>
+      //   );
+      
       case "Profile":
-        return (
-          <div className="feature-section">
-            <h2><FaIdBadge /> Employee Profile</h2>
-            <div className="profile-card">
-              <img
-                src="https://via.placeholder.com/100"
-                alt="Profile"
-                className="profile-pic"
-              />
-              <div>
-                <h3>Rahul Sharma</h3>
-                <p>Software Developer</p>
-                <p>EId : 34001</p>
-                <p>Email: rahul.sharma@gmail.com</p>
-                <p>Mob No : 8365248912</p>
-                <p>Department: FrontEnd</p>
-                <p>Date of Joining : 17.05.2004</p>
-                <button className="btn-edit">Edit Profile</button>
+  return (
+    <div className="feature-section">
+      <h2><FaIdBadge /> Employee Profile</h2>
+
+      {/* Profile Card */}
+      {/* <div className="profile-card">
+        <img
+          src="https://via.placeholder.com/100"
+          alt="Profile"
+          className="profile-pic"
+        />
+        <div>
+          
+          <h3>{userName}</h3>
+          
+          <p>{profile.role}</p>
+          <p>EId : 34001</p>
+         
+          <p>Email: {profile.email}</p>
+          
+          <p>Mob No : {profile.mobile}</p>
+          
+          <p>Department: {profile.department}</p>
+          <p>Designation: {profile.designation}</p>
+          <p>Date of Joining : 17.05.2004</p>
+
+         
+          <button className="btn-edit" onClick={() => setShowEdit(true)}>
+            Edit Profile
+          </button>
+        </div>
+      </div> */}
+      <div className="profile-card">
+  <div className="profile-details">
+    <h3 className="profile-name">Employee Name :{userName}</h3>
+    <p><strong>Role:</strong> {profile.role}</p>
+    <p><strong>EID:</strong> 34001</p>
+    <p><strong>Email:</strong> {profile.email}</p>
+    <p><strong>Mobile:</strong> {profile.mobile}</p>
+    <p><strong>Department:</strong> {profile.department}</p>
+    <p><strong>Designation:</strong> {profile.designation}</p>
+    <p><strong>Date of Joining:</strong> 17.05.2004</p>
+
+    <button className="btn-edit" onClick={() => setShowEdit(true)}>
+      Edit Profile
+    </button>
+  </div>
+</div>
+
+
+      
+      {showEdit && (
+        <div className="modal-overlay">
+          <div className="modal-box">
+
+            <h3>Edit Employee Profile</h3>
+
+            {/* <form className="edit-form">
+              <label>Name:</label>
+              <input type="text" defaultValue="Rahul Sharma" />
+
+              <label>Email:</label>
+              <input type="email" defaultValue="rahul.sharma@gmail.com" />
+
+              <label>Mobile No:</label>
+              <input type="text" defaultValue="8365248912" />
+
+              <label>Department:</label>
+              <input type="text" defaultValue="FrontEnd" />
+
+              <label>Designation:</label>
+              <input type="text" defaultValue="Software Developer" />
+
+              <div className="modal-buttons">
+                <button
+                  type="button"
+                  className="btn-cancel"
+                  onClick={() => setShowEdit(false)}
+                >
+                  Cancel
+                </button>
+
+                <button type="submit" className="btn-save">
+                  Save
+                </button>
               </div>
-            </div>
+            </form> */}
+            <form
+  className="edit-form"
+  onSubmit={async (e) => {
+    e.preventDefault();
+    const res=await fetch(`http://localhost:5000/api/auth/update-profile/${profile.email}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(profile),
+    });
+    const data=await res.json();
+    // const res = await fetch(...);
+
+    console.log("Profile updated:", data);
+    setShowEdit(false);
+  }}
+>
+  {/* <label>Name:</label>
+  <input type="text" value={profile.name} onChange={(e) => setProfile({ ...profile, name: e.target.value })} /> */}
+
+  <label>Email:</label>
+  <input type="email" value={profile.email} onChange={(e) => setProfile({ ...profile, email: e.target.value })} />
+
+  <label>Mobile No:</label>
+  <input type="text" value={profile.mobile} onChange={(e) => setProfile({ ...profile, mobile: e.target.value })} />
+
+  <label>Department:</label>
+  <input type="text" value={profile.department} onChange={(e) => setProfile({ ...profile, department: e.target.value })} />
+
+  <label>Designation:</label>
+  <input type="text" value={profile.designation} onChange={(e) => setProfile({ ...profile, designation: e.target.value })} />
+
+  <div className="modal-buttons">
+    <button type="button" className="btn-cancel" onClick={() => setShowEdit(false)}>Cancel</button>
+    <button type="submit" className="btn-save">Save</button>
+  </div>
+</form>
+
+
           </div>
-        );
+        </div>
+      )}
+    </div>
+  );
 
       case "Attendance":
         // const [search, setSearch] = useState("");
@@ -260,66 +450,150 @@ const EDashboard = () => {
 
         );
 
-      case "Leave":
-        return (
-          <div className="feature-section">
-  <h2>
-    <FaCalendarCheck className="inline-icon" /> Apply for Leave
-  </h2>
+//       case "Leave":
+//         return (
+//           <div className="feature-section">
+//   <h2>
+//     <FaCalendarCheck className="inline-icon" /> Apply for Leave
+//   </h2>
 
-  {/* Leave Balance Summary */}
-  <div className="leave-balance">
-    <div className="leave-card cl">
-      <h4>Casual Leave</h4>
-      <p>3 Remaining</p>
-    </div>
-    <div className="leave-card el">
-      <h4>Earned Leave</h4>
-      <p>2 Remaining</p>
-    </div>
-    <div className="leave-card sl">
-      <h4>Sick Leave</h4>
-      <p>4 Remaining</p>
-    </div>
-  </div>
+//   {/* Leave Balance Summary */}
+//   <div className="leave-balance">
+//     <div className="leave-card cl">
+//       <h4>Casual Leave</h4>
+//       <p>3 Remaining</p>
+//     </div>
+//     <div className="leave-card el">
+//       <h4>Earned Leave</h4>
+//       <p>2 Remaining</p>
+//     </div>
+//     <div className="leave-card sl">
+//       <h4>Sick Leave</h4>
+//       <p>4 Remaining</p>
+//     </div>
+//   </div>
 
-  {/* Apply for Leave Form */}
-  <form className="feature-form">
-    <div className="form-row">
-      <label>
-        Leave Type:
-        <select>
-          <option>Casual Leave</option>
-          <option>Sick Leave</option>
-          <option>Earned Leave</option>
-          <option>Unpaid Leave</option>
-        </select>
-      </label>
+//   {/* Apply for Leave Form */}
+//   <form className="feature-form">
+//     <div className="form-row">
+//       <label>
+//         Leave Type:
+//         <select>
+//           <option>Casual Leave</option>
+//           <option>Sick Leave</option>
+//           <option>Earned Leave</option>
+//           <option>Unpaid Leave</option>
+//         </select>
+//       </label>
+//     </div>
+
+//     <div className="form-row">
+//       <label>
+//         From Date:
+//         <input type="date" />
+//       </label>
+//       <label>
+//         To Date:
+//         <input type="date" />
+//       </label>
+//     </div>
+
+//     <div className="form-row">
+//       <label>
+//         Reason:
+//         <textarea rows="3" placeholder="Enter your reason..." />
+//       </label>
+//     </div>
+
+//     <button type="submit" className="btn-request">Submit Request</button>
+//   </form>
+// </div>
+
+//         );
+
+case "Leave":
+        // const userEmail = localStorage.getItem("userEmail") || "
+   
+
+  
+
+
+  return (
+    <div className="feature-section">
+      <h2>
+        <FaCalendarCheck className="inline-icon" /> Apply for Leave
+      </h2>
+
+      {/* Leave Balance Summary */}
+      <div className="leave-balance">
+        <div className="leave-card cl">
+          <h4>Casual Leave</h4>
+          <p>3 Remaining</p>
+        </div>
+        <div className="leave-card el">
+          <h4>Earned Leave</h4>
+          <p>2 Remaining</p>
+        </div>
+        <div className="leave-card sl">
+          <h4>Sick Leave</h4>
+          <p>4 Remaining</p>
+        </div>
+      </div>
+
+      {/* Apply for Leave Form */}
+      <form className="feature-form" onSubmit={handleLeaveSubmit}>
+        <div className="form-row">
+          <label>
+            Leave Type:
+            <select
+              value={leaveForm.leaveType}
+              onChange={(e) => setLeaveForm({ ...leaveForm, leaveType: e.target.value })}
+            >
+              <option>Casual Leave</option>
+              <option>Sick Leave</option>
+              <option>Earned Leave</option>
+              <option>Unpaid Leave</option>
+            </select>
+          </label>
+        </div>
+
+        <div className="form-row">
+          <label>
+            From Date:
+            <input
+              type="date"
+              value={leaveForm.fromDate}
+              onChange={(e) => setLeaveForm({ ...leaveForm, fromDate: e.target.value })}
+            />
+          </label>
+          <label>
+            To Date:
+            <input
+              type="date"
+              value={leaveForm.toDate}
+              onChange={(e) => setLeaveForm({ ...leaveForm, toDate: e.target.value })}
+            />
+          </label>
+        </div>
+
+        <div className="form-row">
+          <label>
+            Reason:
+            <textarea
+              rows="3"
+              value={leaveForm.reason}
+              placeholder="Enter your reason..."
+              onChange={(e) => setLeaveForm({ ...leaveForm, reason: e.target.value })}
+            />
+          </label>
+        </div>
+
+        <button type="submit" className="btn-request">Submit Request</button>
+      </form>
     </div>
+  );
 
-    <div className="form-row">
-      <label>
-        From Date:
-        <input type="date" />
-      </label>
-      <label>
-        To Date:
-        <input type="date" />
-      </label>
-    </div>
 
-    <div className="form-row">
-      <label>
-        Reason:
-        <textarea rows="3" placeholder="Enter your reason..." />
-      </label>
-    </div>
-
-    <button type="submit" className="btn-request">Submit Request</button>
-  </form>
-</div>
-
-        );
 
       case "Payroll":
         return (
@@ -333,7 +607,7 @@ const EDashboard = () => {
               <li>💰Received : 56500</li>
               <li>📅 Last Paid: Oct 25, 2025</li>
             </ul>
-            <button>Download Payslip</button>
+            <button className="Payslip-dwn">Download Payslip</button>
           </div>
         );
 
@@ -364,8 +638,8 @@ const EDashboard = () => {
     {
       title: "Deadline :",
       icon: <FaTasks />,
-      // value: "Dashboard UI",
-      detail: " Nov 30 2025",
+      value: "Nov 30 2025",
+      // detail: " Nov 30 2025",
     },
   ].map((task, index) => (
     <div key={index} className="card card-task">
@@ -423,14 +697,30 @@ const EDashboard = () => {
           //   <FaSignOutAlt size={40} color="#b00" />
           //   <h2>You have been logged out successfully.</h2>
           // </div>
-          <div className="feature-section logout-confirmation">
+          
+          
+//           <div className="feature-section logout-confirmation">
+//   <FaSignOutAlt className="logout-icon" size={45} color="#b00" />
+//   <h2>Do you want to log out?</h2>
+//   <div className="logout-buttons">
+//     <button className="logout-btn yes-btn">Yes</button>
+//     <button className="logout-btn no-btn">No</button>
+//   </div>
+// </div>
+<div className="feature-section logout-confirmation">
   <FaSignOutAlt className="logout-icon" size={45} color="#b00" />
   <h2>Do you want to log out?</h2>
+
   <div className="logout-buttons">
-    <button className="logout-btn yes-btn">Yes</button>
-    <button className="logout-btn no-btn">No</button>
+    <button className="logout-btn yes-btn" onClick={handleLogoutYes}>
+      Yes
+    </button>
+    <button className="logout-btn no-btn" onClick={handleLogoutNo}>
+      No
+    </button>
   </div>
 </div>
+
 
         );
 
@@ -477,4 +767,4 @@ const EDashboard = () => {
   );
 };
 
-export default EDashboard;
+export default Edashboard;

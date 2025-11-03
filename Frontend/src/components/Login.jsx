@@ -12,7 +12,154 @@ const Login = () => {
 
   const togglePassword = () => setPasswordVisible((vis) => !vis);
 
-  const handleSubmit = async (e) => {
+//   const handleSubmit = async (e) => {
+//   e.preventDefault();
+
+//   const email = e.target[0].value;
+//   const password = e.target[1].value;
+
+//   try {
+//     const res = await fetch("http://localhost:5000/api/auth/login", {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify({ email, password }),
+//     });
+
+//     const data = await res.json();
+//     if (!res.ok) {
+//       alert(data.message || "Login failed");
+//       return;
+//     }
+
+//     alert(`Welcome ${data.name} (${data.role})!`);
+    
+//   } catch (err) {
+//     console.error("Login error:", err);
+//     alert("Network error");
+//   }
+// };
+// const handleSubmit = async (e) => {
+//   e.preventDefault();
+
+//   const email = e.target[0].value;
+//   const password = e.target[1].value;
+
+//   try {
+//     const res = await fetch("http://localhost:5000/api/auth/login", {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify({ email, password }),
+//     });
+
+//     const data = await res.json();
+
+//     if (!res.ok) {
+//       alert(data.message || "Login failed");
+//       return;
+//     }
+
+//     alert(`Welcome ${data.name} (${data.role})!`);
+
+//     // ✅ Save token / user info if needed
+//     localStorage.setItem("token", data.token);
+//     localStorage.setItem("role", data.role);
+
+//     // ✅ Redirect based on role
+//     switch (data.role) {
+//       case "admin":
+//         navigate("/admin-dashboard");
+//         break;
+        
+//       case "HR":
+//         navigate("/hr-dashboard");
+//         break;
+
+//       case "employee":
+//         navigate("/employee-dashboard"); // ← Edash (Employee Dashboard)
+//         break;
+
+//       default:
+//         navigate("/");
+//     }
+
+//   } catch (err) {
+//     console.error("Login error:", err);
+//     alert("Network error");
+//   }
+// };
+
+// const handleSubmit = async (e) => {
+//   e.preventDefault();
+
+//   const email = e.target[0].value;
+//   const password = e.target[1].value;
+
+//   try {
+//     const res = await fetch("http://localhost:5000/api/auth/login", {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify({ email, password }),
+//     });
+
+//     const data = await res.json();
+//     if (!res.ok) {
+//       alert(data.message || "Login failed");
+//       return;
+//     }
+
+//     alert(`Welcome ${data.name} (${data.role})!`);
+
+//     // ✅ Redirect Based on Role
+//     if (data.role === "employee") navigate("/employee-dashboard");
+//     else if (data.role === "HR") navigate("/hr-dashboard");
+//     else if (data.role === "admin") navigate("/admin-dashboard");
+
+//   } catch (err) {
+//     console.error("Login error:", err);
+//     alert("Network error");
+//   }
+// };
+
+// const handleSubmit = async (e) => {
+//   e.preventDefault();
+
+//   const email = e.target[0].value;
+//   const password = e.target[1].value;
+
+//   try {
+//     const res = await fetch("http://localhost:5000/api/auth/login", {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify({ email, password }),
+//     });
+
+//     const data = await res.json();
+
+//     if (!res.ok) {
+//       alert(data.message || "Login failed");
+//       return;
+//     }
+
+//     alert(`Welcome ${data.name} (${data.role})!`);
+
+//     // ✅ Ensure saved role matches case
+//     const role = data.role.toLowerCase(); 
+
+//     // ✅ Redirect based on role
+//     if (role === "employee") {
+//       navigate("/employee-dashboard");
+//     } 
+//     else if (role === "hr") {
+//       navigate("/hr-dashboard");
+//     }
+
+//   } catch (err) {
+//     console.error("Login error:", err);
+//     alert("Network error");
+//   }
+// };
+
+const handleSubmit = async (e) => {
   e.preventDefault();
 
   const email = e.target[0].value;
@@ -22,22 +169,42 @@ const Login = () => {
     const res = await fetch("http://localhost:5000/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email, password, role }), // ✅ also sending selected role
     });
 
     const data = await res.json();
+
     if (!res.ok) {
       alert(data.message || "Login failed");
       return;
     }
 
     alert(`Welcome ${data.name} (${data.role})!`);
-    
+
+    // ✅ Normalize role from backend
+    const userRole = data.role.toLowerCase();
+
+    // ✅ Save Login Info
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("role", data.role);
+
+    // ✅ Redirect based on role
+    if (userRole === "employee") {
+      navigate("/employee-dashboard");
+    } 
+    else if (userRole === "hr") {
+      navigate("/hr-dashboard");
+    }
+    else if (userRole === "admin") {
+      navigate("/admin-dashboard");
+    }
+
   } catch (err) {
     console.error("Login error:", err);
     alert("Network error");
   }
 };
+
 
 
   return (
