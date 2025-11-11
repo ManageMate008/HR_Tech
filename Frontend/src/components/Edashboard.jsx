@@ -29,7 +29,10 @@ import axios from "axios";
 
 
 const userName = localStorage.getItem("userName") || "Employee";
+<<<<<<< HEAD
 // const employeeEmail = localStorage.getItem("userEmail") || "";
+=======
+>>>>>>> def28a3034d7a883d7d31d794dd27dc8628c6c6c
 
 // const [search, setSearch] = useState("");
 
@@ -41,10 +44,14 @@ const SidebarItem = ({ icon, label, active, onClick }) => (
 );
 
  
+<<<<<<< HEAD
 // const userEmail = localStorage.getItem("userEmail") || "";
 const userEmail = localStorage.getItem("userEmail");
 
 
+=======
+const userEmail = localStorage.getItem("userEmail") || "";
+>>>>>>> def28a3034d7a883d7d31d794dd27dc8628c6c6c
 
 
 
@@ -53,6 +60,7 @@ const Edashboard = () => {
   const [activeTab, setActiveTab] = useState("Dashboard");
   const [search, setSearch] = useState("");
    const navigate = useNavigate();
+<<<<<<< HEAD
    const [showHolidayPopup, setShowHolidayPopup] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [activeModal, setActiveModal] = useState(null);
@@ -93,6 +101,18 @@ const Edashboard = () => {
 }, []);
 
 
+=======
+  const [showEdit, setShowEdit] = useState(false);
+  const [profile, setProfile] = useState({
+  name: "",
+  email: "",
+  mobile: "",
+  department: "N/A",
+  designation: "N/A",
+  // DateOfJoining : "23.03.2025"
+ });
+
+>>>>>>> def28a3034d7a883d7d31d794dd27dc8628c6c6c
  const handleLogoutYes = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -102,6 +122,7 @@ const Edashboard = () => {
   const handleLogoutNo = () => {
     setActiveTab("Dashboard");
   }
+<<<<<<< HEAD
 
   const handlePasswordChange = async () => {
   const currentPassword = document.querySelector('input[placeholder="Current Password"]').value;
@@ -140,6 +161,9 @@ const handleEmailUpdate = async () => {
 
 const [leaveForm, setLeaveForm] = useState({
     // userEmail: userEmail,
+=======
+const [leaveForm, setLeaveForm] = useState({
+>>>>>>> def28a3034d7a883d7d31d794dd27dc8628c6c6c
     leaveType: "",
     fromDate: "",
     toDate: "",
@@ -149,6 +173,7 @@ const [leaveForm, setLeaveForm] = useState({
     e.preventDefault();
     try {
       await axios.post("http://localhost:5000/api/leave/apply", {
+<<<<<<< HEAD
         // employeeEmail: userEmail,
         // ...leaveForm,
         // userEmail: leaveForm.userEmail , 
@@ -161,12 +186,20 @@ const [leaveForm, setLeaveForm] = useState({
       alert("✅ Leave request submitted!");
       setLeaveForm({
         // employeeEmail: "",
+=======
+        employeeEmail: userEmail,
+        ...leaveForm,
+      });
+      alert("✅ Leave request submitted!");
+      setLeaveForm({
+>>>>>>> def28a3034d7a883d7d31d794dd27dc8628c6c6c
         leaveType: "",
         fromDate: "",
         toDate: "",
         reason: "",
       });
     } catch (err) {
+<<<<<<< HEAD
       console.log("Error",err);
       console.error("Leave Submit error",err.response?.data || err.message);
       
@@ -182,6 +215,14 @@ const [leaveForm, setLeaveForm] = useState({
     .then(res => res.json())
     .then(data => setTasks(data));
 },[]);
+=======
+      console.error("Leave Submit error",err.response?.data || err.message);
+      
+
+      alert("❌ Failed to submit leave");
+    }
+  };
+>>>>>>> def28a3034d7a883d7d31d794dd27dc8628c6c6c
 
   // --- SECTION RENDERER ---
   const renderContent = () => {
@@ -189,6 +230,7 @@ const [leaveForm, setLeaveForm] = useState({
       case "Dashboard":
         return (
           <>
+<<<<<<< HEAD
             {/* <h2>Employee Dashboard Overview</h2> */}
             {/* <h3 style={{marginTop: "-10px", color: "#555"}}>Welcome, {userName} 👋</h3> */}
             <nav>
@@ -204,6 +246,11 @@ const [leaveForm, setLeaveForm] = useState({
   </div>
           </div>
             </nav>
+=======
+            <h2>Employee Dashboard Overview</h2>
+            <h3 style={{marginTop: "-10px", color: "#555"}}>Welcome, {userName} 👋</h3>
+
+>>>>>>> def28a3034d7a883d7d31d794dd27dc8628c6c6c
 
             <div className="stats-grid">
               <div className="card">
@@ -371,7 +418,11 @@ const [leaveForm, setLeaveForm] = useState({
       case "Profile":
   return (
     <div className="feature-section">
+<<<<<<< HEAD
       {/* <h2><FaIdBadge /> Employee Profile</h2> */}
+=======
+      <h2><FaIdBadge /> Employee Profile</h2>
+>>>>>>> def28a3034d7a883d7d31d794dd27dc8628c6c6c
 
       {/* Profile Card */}
       {/* <div className="profile-card">
@@ -403,6 +454,7 @@ const [leaveForm, setLeaveForm] = useState({
       </div> */}
       <div className="profile-card">
   <div className="profile-details">
+<<<<<<< HEAD
     <h2> Employee Profile</h2>
     <h3 className="profile-name">Employee Name :{userName}</h3>
     
@@ -414,6 +466,16 @@ const [leaveForm, setLeaveForm] = useState({
     <p><strong>Department:</strong> {profile.department}</p>
     <p><strong>Designation:</strong> {profile.designation}</p>
     <p><strong>Date of Joining:</strong>{profile.dateOfJoining}</p>
+=======
+    <h3 className="profile-name">Employee Name :{userName}</h3>
+    <p><strong>Role:</strong> {profile.role}</p>
+    <p><strong>EID:</strong> 34001</p>
+    <p><strong>Email:</strong> {profile.email}</p>
+    <p><strong>Mobile:</strong> {profile.mobile}</p>
+    <p><strong>Department:</strong> {profile.department}</p>
+    <p><strong>Designation:</strong> {profile.designation}</p>
+    <p><strong>Date of Joining:</strong> 17.05.2004</p>
+>>>>>>> def28a3034d7a883d7d31d794dd27dc8628c6c6c
 
     <button className="btn-edit" onClick={() => setShowEdit(true)}>
       Edit Profile
@@ -429,7 +491,40 @@ const [leaveForm, setLeaveForm] = useState({
 
             <h3>Edit Employee Profile</h3>
 
+<<<<<<< HEAD
             
+=======
+            {/* <form className="edit-form">
+              <label>Name:</label>
+              <input type="text" defaultValue="Rahul Sharma" />
+
+              <label>Email:</label>
+              <input type="email" defaultValue="rahul.sharma@gmail.com" />
+
+              <label>Mobile No:</label>
+              <input type="text" defaultValue="8365248912" />
+
+              <label>Department:</label>
+              <input type="text" defaultValue="FrontEnd" />
+
+              <label>Designation:</label>
+              <input type="text" defaultValue="Software Developer" />
+
+              <div className="modal-buttons">
+                <button
+                  type="button"
+                  className="btn-cancel"
+                  onClick={() => setShowEdit(false)}
+                >
+                  Cancel
+                </button>
+
+                <button type="submit" className="btn-save">
+                  Save
+                </button>
+              </div>
+            </form> */}
+>>>>>>> def28a3034d7a883d7d31d794dd27dc8628c6c6c
             <form
   className="edit-form"
   onSubmit={async (e) => {
@@ -455,17 +550,23 @@ const [leaveForm, setLeaveForm] = useState({
   <label>Mobile No:</label>
   <input type="text" value={profile.mobile} onChange={(e) => setProfile({ ...profile, mobile: e.target.value })} />
 
+<<<<<<< HEAD
   <label>Date of Birth:</label> 
   <input type="date" value={profile.dateOfBirth} onChange={(e) => setProfile({ ...profile, dateOfBirth: e.target.value })} />
 
+=======
+>>>>>>> def28a3034d7a883d7d31d794dd27dc8628c6c6c
   <label>Department:</label>
   <input type="text" value={profile.department} onChange={(e) => setProfile({ ...profile, department: e.target.value })} />
 
   <label>Designation:</label>
   <input type="text" value={profile.designation} onChange={(e) => setProfile({ ...profile, designation: e.target.value })} />
+<<<<<<< HEAD
   
   <label>Date of Joining:</label>
   <input type="date" value={profile.dateOfJoining} onChange={(e) => setProfile({ ...profile, dateOfJoining: e.target.value })} />
+=======
+>>>>>>> def28a3034d7a883d7d31d794dd27dc8628c6c6c
 
   <div className="modal-buttons">
     <button type="button" className="btn-cancel" onClick={() => setShowEdit(false)}>Cancel</button>
@@ -669,6 +770,7 @@ case "Leave":
 
       {/* Apply for Leave Form */}
       <form className="feature-form" onSubmit={handleLeaveSubmit}>
+<<<<<<< HEAD
 
         {/* <div className="form-row">
         <label>
@@ -677,6 +779,8 @@ case "Leave":
         </label>
         </div> */}
 
+=======
+>>>>>>> def28a3034d7a883d7d31d794dd27dc8628c6c6c
         <div className="form-row">
           <label>
             Leave Type:
@@ -684,9 +788,12 @@ case "Leave":
               value={leaveForm.leaveType}
               onChange={(e) => setLeaveForm({ ...leaveForm, leaveType: e.target.value })}
             >
+<<<<<<< HEAD
               
               <option>-- Select Leave Type --</option>
               {/* <option>Casual Leave</option> */}
+=======
+>>>>>>> def28a3034d7a883d7d31d794dd27dc8628c6c6c
               <option>Casual Leave</option>
               <option>Sick Leave</option>
               <option>Earned Leave</option>
@@ -726,7 +833,11 @@ case "Leave":
           </label>
         </div>
 
+<<<<<<< HEAD
         <button type="submit" className="btn-request">Submit</button>
+=======
+        <button type="submit" className="btn-request">Submit Request</button>
+>>>>>>> def28a3034d7a883d7d31d794dd27dc8628c6c6c
       </form>
     </div>
   );
@@ -735,6 +846,7 @@ case "Leave":
 
       case "Payroll":
         return (
+<<<<<<< HEAD
           // <div className="feature-section">
           //   <h2><FaMoneyBill /> Payroll Details</h2>
           //   <ul>
@@ -845,6 +957,20 @@ case "Leave":
     </div>
   )}
 </div>
+=======
+          <div className="feature-section">
+            <h2><FaMoneyBill /> Payroll Details</h2>
+            <ul>
+              <li>📅 Month : November</li>
+              <li>🏦 Bank: HDFC Bank — ****1234</li>
+              <li>💰 Total Salary: ₹60,000 / month</li>
+              <li>💰 PF : 3500</li>
+              <li>💰Received : 56500</li>
+              <li>📅 Last Paid: Oct 25, 2025</li>
+            </ul>
+            <button className="Payslip-dwn">Download Payslip</button>
+          </div>
+>>>>>>> def28a3034d7a883d7d31d794dd27dc8628c6c6c
         );
 
       case "Task":
@@ -891,6 +1017,7 @@ case "Leave":
 <div className="feature-section-task">
   <h2><FaTasks /> My Tasks</h2>
 
+<<<<<<< HEAD
   <div className="task-cards">   {/* ✅ Add this wrapper */}
     {[
       {
@@ -923,6 +1050,38 @@ case "Leave":
         <p><b>Status:</b> {task.status}</p>
         <p><b>Deadline:</b> {task.deadline}</p>
 
+=======
+  {[
+    {
+      title: "Assigned Task :",
+      icon: <FaTasks />,
+      value: "UI/UX Design",
+      // detail: "Deadline: 30 Nov 2025",
+    },
+    {
+      title: "Task Description:",
+      icon: <FaTasks />,
+      value: "Dashboard UI",
+      
+    },
+    {
+      title: "Status :",
+      icon: <FaTasks />,
+      value: "In Progress (50% completed)",
+      // detail: "50% Completed",
+    },
+    {
+      title: "Deadline :",
+      icon: <FaTasks />,
+      value: "Nov 30 2025",
+      // detail: " Nov 30 2025",
+    },
+  ].map((task, index) => (
+    <div key={index} className="card card-task">
+      <div className="card-header">
+        <h4>{task.title}</h4>
+        {task.icon}
+>>>>>>> def28a3034d7a883d7d31d794dd27dc8628c6c6c
       </div>
     ))}
   </div>

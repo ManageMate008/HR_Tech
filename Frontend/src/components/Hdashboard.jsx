@@ -1,9 +1,14 @@
 import React, { useState,useEffect } from "react";
 // import "./HRDashboard.css";
+<<<<<<< HEAD
 import "./Hdashboard.css";
 import { Modal } from "antd";
 import { Calendar } from "antd";
 import { useNavigate } from "react-router-dom";
+=======
+import "./Hdashboard.css"
+import { Modal } from "antd";
+>>>>>>> def28a3034d7a883d7d31d794dd27dc8628c6c6c
 import {
   FaTachometerAlt,
   FaCalendarCheck,
@@ -36,6 +41,7 @@ const SidebarItem = ({ icon, label, active, onClick }) => (
 const Hdashboard = () => {
   const [activeTab, setActiveTab] = useState("Dashboard");
   const [search, setSearch] = useState("");
+<<<<<<< HEAD
   const navigate=useNavigate();
   const [showPopup, setShowPopup] = useState(false);
   const [open, setOpen] = useState(false);
@@ -85,6 +91,9 @@ useEffect(() => {
 }, []);
 
 
+=======
+  const [holidayOpen, setHolidayOpen] = useState(false);
+>>>>>>> def28a3034d7a883d7d31d794dd27dc8628c6c6c
 
   // ==================== CONTENT RENDERING ====================
   const renderContent = () => {
@@ -181,6 +190,7 @@ useEffect(() => {
                 <p className="card-value"><small>New Year Eve- Dec 31,2025</small> </p>
                 <p className="card-value"><small>New Year - Jan 1,2026</small></p>
               </div> */}
+<<<<<<< HEAD
 
              <div
   className="card"
@@ -251,6 +261,46 @@ useEffect(() => {
 
 
               
+=======
+              <div
+                className="card"
+                onClick={() => setHolidayOpen(true)}
+                style={{ cursor: "pointer" }}
+              >
+                <h4><FaCalendar /> Holiday</h4>
+                <p className="card-value"><small>Diwali - Oct 21, 2025</small></p>
+                <p className="card-value"><small>Christmas - Dec 25, 2025</small></p>
+                <p className="card-value"><small>New Year Eve - Dec 31, 2025</small></p>
+                <p className="card-value"><small>New Year - Jan 1, 2026</small></p>
+              </div>
+
+              {/* ✅ Holiday Modal */}
+              <Modal
+                title="Holiday List"
+                open={holidayOpen}
+                onCancel={() => setHolidayOpen(false)}
+                footer={null}
+              >
+                <ul style={{ lineHeight: "1.9", fontSize: "15px" }}>
+                  <li><b>Diwali</b> - Oct 21, 2025</li>
+                  <li><b>Christmas</b> - Dec 25, 2025</li>
+                  <li><b>New Year Eve</b> - Dec 31, 2025</li>
+                  <li><b>New Year</b> - Jan 1, 2026</li>
+                  <li><b>Republic Day</b> - Jan 26, 2026</li>
+                  <li><b>Holi</b> - March 21, 2026</li>
+                  <li><b>Good Friday</b> - April 3, 2026</li>
+                  <li><b>Eid-ul-Fitr</b> - April 10, 2026</li>
+                  <li><b>Raksha Bandhan</b> - Aug 28, 2026</li>
+                  <li><b>Independence Day</b> - Aug 15, 2026</li>
+                  {/* <li><b>Ganesh Chaturthi</b> - Sept 18, 2026</li> */}
+                  <li><b>Gandhi Jayanti</b> - Oct 2, 2026</li>
+                  <li><b>Dussehra</b> - Oct 20, 2026</li>
+
+
+                </ul>
+              </Modal>
+
+>>>>>>> def28a3034d7a883d7d31d794dd27dc8628c6c6c
             </div>
           </div>
         );

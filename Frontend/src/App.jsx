@@ -36,8 +36,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+<<<<<<< HEAD
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+=======
+>>>>>>> def28a3034d7a883d7d31d794dd27dc8628c6c6c
 import './index.css';
 import HomePage from './components/Home';
 import Login from './components/Login';
@@ -57,7 +60,10 @@ const App = () => {
         <Route path="/employee-dashboard" element={<Edashboard />} />
         <Route path="/hr-dashboard" element={<Hdashboard />} />
       </Routes>
+<<<<<<< HEAD
       <toastContainer position="top-right" autoClose={3000} />
+=======
+>>>>>>> def28a3034d7a883d7d31d794dd27dc8628c6c6c
     </Router>
   );
 };

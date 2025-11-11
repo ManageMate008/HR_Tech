@@ -92,7 +92,8 @@ body {
   flex: 1;
   padding: 30px 40px;
   overflow-y: auto;
-  background: var(--background);
+  /* background: var(--background); */
+  background: rgba(255, 255, 255, 0.878);
 }
 
 .main-content h2 {
@@ -153,6 +154,7 @@ body {
   font-weight: 700;
   color: var(--secondary);
   margin: 6px 0 8px;
+  align-items: center;
 }
 
 small {
@@ -528,6 +530,7 @@ small {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   padding: 16px;
   margin: 12px 0;
+  align-items: flex-start;
 }
 
 .card-header {
@@ -550,9 +553,10 @@ small {
 }
 
 .card-value {
-  font-size: 1rem;
+  font-size: 1rem; 
   font-weight: 600;
   margin: 4px 0;
+<<<<<<< HEAD
   justify-content: flex-start;
 }
 
@@ -567,6 +571,19 @@ small {
   height: 100%;
   background: rgba(0, 0, 0, 0.55);
   display: flex;
+=======
+  align-self: flex-start;   /* font-size: 22px; */
+  font-weight: 700;
+  color: var(--secondary);
+  margin: 6px 0 8px;
+
+}
+
+
+
+/* .feature-section-task{
+  background: var(--secondary);
+>>>>>>> def28a3034d7a883d7d31d794dd27dc8628c6c6c
   justify-content: center;
   align-items: center;
   z-index: 1000;
