@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 // import "./HRDashboard.css";
-import "./Hdashboard.css"
+import "./Hdashboard.css";
+import { Modal } from "antd";
+import { Calendar } from "antd";
+import { useNavigate } from "react-router-dom";
 import {
   FaTachometerAlt,
   FaCalendarCheck,
@@ -20,6 +23,9 @@ import {
   FaBirthdayCake,
 } from "react-icons/fa";
 
+const userName = localStorage.getItem("userName") || "HR";
+
+
 const SidebarItem = ({ icon, label, active, onClick }) => (
   <div className={`sidebar-item ${active ? "active" : ""}`} onClick={onClick}>
     <div className="sidebar-icon">{icon}</div>
@@ -30,6 +36,55 @@ const SidebarItem = ({ icon, label, active, onClick }) => (
 const Hdashboard = () => {
   const [activeTab, setActiveTab] = useState("Dashboard");
   const [search, setSearch] = useState("");
+  const navigate=useNavigate();
+  const [showPopup, setShowPopup] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [holidayOpen, setHolidayOpen] = useState(false);
+
+
+const handleLogoutYes=() => {
+  navigate("/") ;
+};
+
+const handleLogoutNo=() =>{
+    //  navigate("/hr-dashbaord")
+    setActiveTab("Dashboard");
+};
+
+const handlePrint = () => {
+  window.print();
+}
+
+const handleAssignTask=async(e) =>{
+        e.preventDefault();
+
+  const employeeEmail = e.target.employeeEmail.value;
+  const taskTitle = e.target.taskTitle.value;
+  const taskDescription = e.target.taskDescription.value;
+  const deadline = e.target.deadline.value;
+  // const taskTitle = e.target.taskTitle.value;
+  // const taskDescription = e.target.taskDescription.value;
+  // const deadline = e.target.deadline.value;
+
+  const res = await fetch("http://localhost:5000/api/task/assign", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ employeeEmail, taskTitle, taskDescription, deadline }),
+  });
+
+  const data = await res.json();
+  alert(data.message);
+};
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    window.location.reload();
+  }, 3000);
+
+  return () => clearInterval(interval);
+}, []);
+
+
 
   // ==================== CONTENT RENDERING ====================
   const renderContent = () => {
@@ -38,7 +93,14 @@ const Hdashboard = () => {
       case "Dashboard":
         return (
           <div className="feature-section">
-            <h2><FaTachometerAlt /> HR Dashboard Overview</h2>
+            {/* <h2><FaTachometerAlt /> HR Dashboard Overview</h2> */}
+            
+              <div>
+                <h2 style={{marginTop: "-10px", color: "#555"}}>Welcome, {userName} </h2>
+              </div>
+               
+            
+           
             <div className="stats-grid">
               <div className="card">
                 <h4><FaUsers /> Total Employees</h4>
@@ -53,11 +115,38 @@ const Hdashboard = () => {
                 <p><small>Leave : 22</small></p>
               </div>
 
-              <div className="card">
+              {/* <div className="card">
                 <h4><FaRegCalendarAlt /> Departments</h4>
                 <p className="card-value">8</p>
                 <small>New Dept: Design</small>
-              </div>
+              </div> */}
+             
+             <div className="card" onClick={() => setOpen(true)}>
+             <h4><FaRegCalendarAlt /> Departments</h4>
+            <p className="card-value">8</p>
+            <small>New Dept: Design</small>
+            </div>
+            {open && (
+  <div className="dept-dialog-overlay">
+    <div className="dept-dialog">
+      <h3>Departments</h3>
+
+      <ul className="dept-list">
+        <li>Human Resource</li>
+        <li>Finance</li>
+        <li>Sales</li>
+        <li>IT Support</li>
+        <li>Development</li>
+        <li>Quality Assurance</li>
+        <li>Design</li>
+        <li>Administration</li>
+      </ul>
+
+      <button className="dept-close-btn" onClick={() => setOpen(false)}>Close</button>
+    </div>
+  </div>
+)}
+
 
               <div className="card">
                 <h4><FaCalendarCheck /> Attendance Rate</h4>
@@ -85,14 +174,83 @@ const Hdashboard = () => {
                 <p className="card-value"><small>Arpit Routray - Nov 18</small></p>
               </div>
 
-              <div className="card">
+              {/* <div className="card">
                 <h4><FaCalendar /> Holiday</h4>
                 <p className="card-value"><small>Diwali-Oct 21,2025</small></p>
                 <p className="card-value"><small>Christmas- Dec 25,2025</small></p>
                 <p className="card-value"><small>New Year Eve- Dec 31,2025</small> </p>
                 <p className="card-value"><small>New Year - Jan 1,2026</small></p>
-              </div>
+              </div> */}
 
+             <div
+  className="card"
+  onClick={() => setHolidayOpen(true)}
+  style={{ cursor: "pointer" }}
+>
+  <h4><FaCalendar /> Holiday</h4>
+  <p className="card-value"><small>Diwali - Oct 21, 2025</small></p>
+  <p className="card-value"><small>Christmas - Dec 25, 2025</small></p>
+  <p className="card-value"><small>New Year Eve - Dec 31, 2025</small> </p>
+  <p className="card-value"><small>New Year - Jan 1, 2026</small></p>
+</div>
+ 
+ {/* <Modal
+  title="Holiday List"
+  open={holidayOpen}
+  onCancel={() => setHolidayOpen(false)}
+  footer={null}
+  width={380}
+  bodyStyle={{ padding: "14px 20px", maxHeight: "350px", overflowY: "auto" }}
+>
+  <ul style={{ lineHeight: "1.9", fontSize: "15px", margin: 0 }}>
+    <li><b>Diwali</b> - Oct 21, 2025</li>
+    <li><b>Christmas</b> - Dec 25, 2025</li>
+    <li><b>New Year Eve</b> - Dec 31, 2025</li>
+    <li><b>New Year</b> - Jan 1, 2026</li>
+    <li><b>Republic Day</b> - Jan 26, 2026</li>
+    <li><b>Holi</b> - March 21, 2026</li>
+    <li><b>Good Friday</b> - April 3, 2026</li>
+    <li><b>Eid-ul-Fitr</b> - April 10, 2026</li>
+    <li><b>Raksha Bandhan</b> - Aug 28, 2026</li>
+    <li><b>Independence Day</b> - Aug 15, 2026</li>
+    <li><b>Ganesh Chaturthi</b> - Sept 18, 2026</li>
+    <li><b>Gandhi Jayanti</b> - Oct 2, 2026</li>
+    <li><b>Dussehra</b> - Oct 20, 2026</li>
+  </ul>
+</Modal> */}
+<Modal
+  title="Holiday Calendar"
+  open={holidayOpen}
+  onCancel={() => setHolidayOpen(false)}
+  footer={null}
+>
+  <div className="holiday-calendar">
+    {[
+      { name: "Diwali", date: "Oct 21, 2025" },
+      { name: "Christmas", date: "Dec 25, 2025" },
+      { name: "New Year Eve", date: "Dec 31, 2025" },
+      { name: "New Year", date: "Jan 1, 2026" },
+      { name: "Republic Day", date: "Jan 26, 2026" },
+      { name: "Holi", date: "Mar 21, 2026" },
+      { name: "Good Friday", date: "Apr 3, 2026" },
+      { name: "Eid-ul-Fitr", date: "Apr 10, 2026" },
+      { name: "Raksha Bandhan", date: "Aug 28, 2026" },
+      { name: "Independence Day", date: "Aug 15, 2026" },
+      { name: "Ganesh Chaturthi", date: "Sept 18, 2026" },
+      { name: "Gandhi Jayanti", date: "Oct 2, 2026" },
+      { name: "Dussehra", date: "Oct 20, 2026" },
+    ].map((h, i) => (
+      <div key={i} className="holiday-cell">
+        <span className="holiday-date">{h.date}</span>
+        <span className="holiday-name">{h.name}</span>
+      </div>
+    ))}
+  </div>
+</Modal>
+
+
+
+              
             </div>
           </div>
         );
@@ -150,6 +308,7 @@ const Hdashboard = () => {
               <FaSearch className="search-icon" />
               <input
                 type="text"
+
                 placeholder="Search by employee name..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
@@ -195,14 +354,40 @@ const Hdashboard = () => {
       case "Payroll Status":
         return (
           <div className="feature-section">
-            <h2><FaMoneyBill /> Payroll Overview</h2>
-            <ul>
-              <li>💰 Total Salary Disbursed: ₹15,00,000</li>
-              <li>👥 Employees Paid: 248 / 250</li>
-              <li>📅 Last Disbursal: Oct 25, 2025</li>
-            </ul>
-            <button className="btn-request">Download Payroll Report</button>
+        <h2><FaMoneyBill /> Payroll Overview</h2>
+        <ul>
+          <li>💰 <span><b>Total Salary Disbursed:</b> ₹15,00,000</span> </li>
+          <li>👥  <span><b>Employees Paid:</b> 248 / 250</span></li>
+          <li>📅 <span><b>Last Disbursal:</b> Oct 25, 2025</span></li>
+        </ul>
+
+        <button className="btn-request" onClick={() => setShowPopup(true)}>
+          Download
+        </button>
+
+         {showPopup && (
+        <div className="popup-overlay">
+          <div className="popup-box">
+            <h3>Payroll Slip Details</h3>
+
+            <label>Month</label>
+            <input type="month" />
+
+            <label>Employee ID</label>
+            <input type="text" placeholder="Enter Employee ID" />
+
+            <label>Remarks (Optional)</label>
+            <textarea placeholder="Add any notes..." />
+
+            <div className="popup-actions">
+              <button className="close-btn" onClick={() => setShowPopup(false)}>Cancel</button>
+              <button className="download-btn" onClick={handlePrint}>Print / Download</button>
+            </div>
           </div>
+        </div>
+      )}
+      </div>
+    
         );
 
       // ==================== TASK ASSIGN ====================
@@ -210,36 +395,38 @@ const Hdashboard = () => {
         return (
           <div className="feature-section">
             <h2><FaTasks /> Assign Tasks</h2>
-            <form className="feature-form">
+            <form className="feature-form" onSubmit={handleAssignTask}>
               <div className="form-row">
                 <label>
-                  Employee Name:
-                  <input type="text" placeholder="Enter employee name" />
+                  Email:
+                  <input type="email" placeholder="Enter employee Email" name="employeeEmail" required/>
                 </label>
               </div>
-              
+
+             
+
               <div className="form-row">
                 <label>
                   Department:
-                  <input type="text" placeholder="Enter department" />
+                  <input type="text" placeholder="Enter department" name="department" required />
                 </label>
               </div>
               <div className="form-row">
                 <label>
                   Task Title:
-                  <input type="text" placeholder="Enter task title" />
+                  <input type="text"name="taskTitle" placeholder="Enter task title"  required/>
                 </label>
               </div>
               <div className="form-row">
                 <label>
                   Deadline:
-                  <input type="date" />
+                  <input type="date"  name="deadline" required/>
                 </label>
               </div>
               <div className="form-row">
                 <label>
                   Description:
-                  <textarea rows="3" placeholder="Task details..." />
+                  <textarea rows="3" name="taskDescription" placeholder="Task details..." />
                 </label>
               </div>
               <button className="btn-request">Assign Task</button>
@@ -277,14 +464,26 @@ const Hdashboard = () => {
       // ==================== LOGOUT ====================
       case "Logout":
         return (
-          <div className="feature-section logout-confirmation">
-            <FaSignOutAlt className="logout-icon" size={45} color="#b00" />
-            <h2>Do you want to log out?</h2>
-            <div className="logout-buttons">
-              <button className="logout-btn yes-btn">Yes</button>
-              <button className="logout-btn no-btn">No</button>
-            </div>
-          </div>
+          // <div className="feature-section logout-confirmation">
+          //   <FaSignOutAlt className="logout-icon" size={45} color="#b00" />
+          //   <h2>Do you want to log out?</h2>
+          //   <div className="logout-buttons">
+          //     <button className="logout-btn yes-btn">Yes</button>
+          //     <button className="logout-btn no-btn">No</button>
+          //   </div>
+          // </div>
+           <div className="feature-section logout-confirmation">
+        <FaSignOutAlt className="logout-icon" size={45} color="#b00" />
+        <h2>Do you want to log out?</h2>
+        <div className="logout-buttons">
+          <button className="logout-btn yes-btn" onClick={handleLogoutYes}>
+            Yes
+          </button>
+          <button className="logout-btn no-btn" onClick={handleLogoutNo}>
+            No
+          </button>
+        </div>
+      </div>
         );
 
       default:
@@ -299,12 +498,13 @@ const Hdashboard = () => {
 
         {[
           ["Dashboard", <FaTachometerAlt />],
-          ["Leave Management", <FaCalendarCheck />],
-          ["Attendance", <FaClipboardList />],
-          ["Payroll Status", <FaMoneyBill />],
           ["Task Assign", <FaTasks />],
-          ["Report", <FaFileAlt />],
           ["Quick Action", <FaBolt />],
+          ["Payroll Status", <FaMoneyBill />],
+          ["Attendance", <FaClipboardList />],
+          ["Leave Management", <FaCalendarCheck />],
+          ["Report", <FaFileAlt />],
+          
         ].map(([label, icon]) => (
           <SidebarItem
             key={label}

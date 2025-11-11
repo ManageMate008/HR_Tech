@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./SignUp.css";
 import SignupImage from "../assets/Sign Up.jpg";
+import { toast } from "react-toastify";
+
 
 const SignUp = () => {
   const [role, setRole] = useState("HR");
@@ -26,11 +28,12 @@ const SignUp = () => {
         alert(data.message || "Signup failed");
         return { success: false };
       }
-      alert("Signup successful!");
+      // alert("Signup successful!");
+      toast.success("Signup successful! Please login.");
       navigate("/login");
       return { success: true };
     } catch (err) {
-      console.error("Network error:", err);
+      toast.error("Network error:", err);
       alert("Network error. Please try again later.");
       return { success: false };
     }
@@ -40,7 +43,8 @@ const SignUp = () => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      alert("Passwords do not match!");
+      // alert("Passwords do not match!");
+      toast.warn("Passwords do not match!");
       return;
     }
 

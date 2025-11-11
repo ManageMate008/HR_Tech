@@ -11,25 +11,47 @@
 .login-page {
   height: 100vh;
   width: 100%;
-  background:
+  /* background-color: #a1e3fc; */
+  background: #a0c8ff;
+  /* background:linear-gradient(135deg, #D1F8EF, #A1E3FC); */
     /* Gradient overlay on top */
     /* linear-gradient(135deg, #D1F8EF, #A1E3FC), */
     /* The background image underneath */
-  url("../assets/LoginBG_new.jpg");
+  /* url("../assets/LoginBG_new.jpg"); */
   background-size: cover;
   display: flex;
   justify-content: center;
   align-items: center;
   font-family: "Poppins", sans-serif;
 }
+.login-img{
+  height: 78%;
+  /* height: 91%; */
+  /* height: 100%; */
+  width: 420px;
+  /* width: 130px; */
+  /* border-radius: 18px; */
+   border-radius: 25px;
+  padding: 50px 45px;
+  /* padding: 80px 45px; */
+  box-shadow: 0 10px 30px rgba(54, 116, 181, 0.2);
+  object-fit: cover;
+  border-radius: inherit; 
+  overflow: hidden;
+  /* background-color: white; */
+  background: #ffffffcc;
+
+}
 
 .login-form-container {
+  height: 78%;
   width: 420px;
   background: #ffffffcc;
   backdrop-filter: blur(6px);
   border-radius: 18px;
   box-shadow: 0 10px 30px rgba(54, 116, 181, 0.2);
   padding: 50px 45px;
+   border-radius: inherit;
 }
 
 .login-title {

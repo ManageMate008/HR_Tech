@@ -641,3 +641,229 @@ small {
   justify-content: space-between;
   gap: 10px;
 }
+
+.popup-overlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-box {
+  background: #ffffff;
+  width: 420px;
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0px 5px 25px rgba(0,0,0,0.25);
+  animation: popupFade 0.35s ease;
+}
+
+.popup-box h3 {
+  font-size: 22px;
+  margin-bottom: 18px;
+  color: #0D5EA6;
+  text-align: center;
+}
+
+.popup-box label {
+  font-size: 15px;
+  font-weight: 500;
+  margin-top: 10px;
+  display: block;
+  color: #333;
+}
+
+.popup-box input,
+.popup-box textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  margin-top: 5px;
+  margin-bottom: 12px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+.popup-box input:focus,
+.popup-box textarea:focus {
+  border-color: #0D5EA6;
+  box-shadow: 0 0 4px rgba(13,94,166,0.5);
+}
+
+/* Textarea height */
+.popup-box textarea {
+  resize: none;
+  min-height: 80px;
+}
+
+/* Action Buttons Container */
+.popup-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+/* Cancel Button */
+.popup-actions .close-btn {
+  background: #c2c2c2;
+  border: none;
+  padding: 9px 17px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.25s ease;
+}
+.popup-actions .close-btn:hover {
+  background: #9b9b9b;
+}
+
+/* Download/Print Button */
+.popup-actions .download-btn {
+  background: #0D5EA6;
+  color: white;
+  border: none;
+  padding: 9px 17px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.25s ease;
+}
+.popup-actions .download-btn:hover {
+  background: #094c87;
+}
+
+
+.dept-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 500;
+}
+
+.dept-dialog {
+  background: #fff;
+  padding: 25px 35px;
+  border-radius: 12px;
+  width: 380px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.25);
+  animation: popIn 0.25s ease;
+}
+
+.dept-dialog h3 {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.dept-list {
+  list-style: none;
+  padding: 0;
+  margin: 15px 0;
+}
+
+.dept-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 15px;
+}
+
+.dept-close-btn {
+  display: block;
+  margin: 15px auto 0;
+  background: #d9534f;
+  color: white;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.dept-close-btn:hover {
+  background: #c0392b;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.ant-modal-content {
+  border-radius: 12px !important;
+}
+
+.ant-modal-header {
+  border-radius: 12px 12px 0 0 !important;
+}
+
+.holiday-mark {
+  background: #ffdede;
+  border: 2px solid #ff4b4b;
+  color: #b30000;
+  padding: 3px 6px;
+  border-radius: 50px;
+  font-size: 11px;
+  text-align: center;
+  display: block;
+  margin-top: 4px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.holiday-mark:hover {
+  background: #ffbcbc;
+  border-color: #ff0000;
+  font-weight: 600;
+}
+
+
+.holiday-calendar {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.holiday-cell {
+  background: #ffffff;
+  border: 1px solid #e6e6e6;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  transition: 0.3s;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+}
+
+.holiday-cell:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+.holiday-date {
+  display: block;
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 4px;
+}
+
+.holiday-name {
+  display: block;
+  font-size: 14px;
+  color: #d9534f;
+  font-weight: 600;
+}
+
+
+

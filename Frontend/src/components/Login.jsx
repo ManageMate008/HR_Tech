@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
-import LoginBG from "../assets/LoginBG.jpg"
+import LoginBG from "../assets/LoginBGC_1.png"
+import Edashboard from "./Edashboard";
+import Hdashboard from "./Hdashboard";
 
 
 const Login = () => {
@@ -12,7 +14,105 @@ const Login = () => {
 
   const togglePassword = () => setPasswordVisible((vis) => !vis);
 
-  const handleSubmit = async (e) => {
+//   const handleSubmit = async (e) => {
+//   e.preventDefault();
+
+//   const email = e.target[0].value;
+//   const password = e.target[1].value;
+
+//   try {
+//     const res = await fetch("http://localhost:5000/api/auth/login", {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify({ email, password }),
+//     });
+
+//     const data = await res.json();
+//     if (!res.ok) {
+//       alert(data.message || "Login failed");
+//       return;
+//     }
+
+//     alert(`Welcome ${data.name} (${data.role})!`);
+    
+//   } catch (err) {
+//     console.error("Login error:", err);
+//     alert("Network error");
+//   }
+// };
+
+
+// const handleSubmit = async (e) => {
+//   e.preventDefault();
+
+//   const email = e.target[0].value;
+//   const password = e.target[1].value;
+
+//   try {
+//     const res = await fetch("http://localhost:5000/api/auth/login", {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify({ email, password }),
+//     });
+
+//     const data = await res.json();
+//     if (!res.ok) {
+//       alert(data.message || "Login failed");
+//       return;
+//     }
+
+//     alert(`Welcome ${data.name} (${data.role})!`);
+
+//     // ✅ Redirect based on role
+//     // if (data.role === "employee") navigate("/employee-dashboard");
+//     // else if (data.role === "HR") navigate("/hr-dashboard");
+//     // else if (data.role === "admin") navigate("/admin");
+//     const userRole = data.role.toLowerCase();
+
+//    if (userRole === "employee") navigate("/employee-dashboard");
+//    else if (userRole === "hr") navigate("/hr-dashboard");
+
+//   } catch (err) {
+//     console.error("Login error:", err);
+//     alert("Network error");
+//   }
+// };
+
+// const handleSubmit = async (e) => {
+//   e.preventDefault();
+
+//   const email = e.target[0].value;
+//   const password = e.target[1].value;
+
+//   try {
+//     const res = await fetch("http://localhost:5000/api/auth/login", {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify({ email, password }),
+//     });
+
+//     const data = await res.json();
+//     if (!res.ok) {
+//       alert(data.message || "Login failed");
+//       return;
+//     }
+
+//     alert(`Welcome ${data.name} (${data.role})!`);
+
+//     // ✅ FIX: Uniform role handling
+//     const userRole = data.role.toLowerCase();
+
+//     if (userRole === "employee") navigate("/employee-dashboard");
+//     else if (userRole === "hr") navigate("/hr-dashboard");
+//     // else if (userRole === "admin") navigate("/admin-dashboard");
+    
+//   } catch (err) {
+//     console.error("Login error:", err);
+//     alert("Network error");
+//   }
+// };
+
+const handleSubmit = async (e) => {
   e.preventDefault();
 
   const email = e.target[0].value;
@@ -30,9 +130,24 @@ const Login = () => {
       alert(data.message || "Login failed");
       return;
     }
+    const dbRole=data.role.toLowerCase();
+    const selectedRole=role.toLowerCase();
+
+    if(dbRole!==selectedRole){
+      alert( "Role mismatched!")
+      return ;
+    }
+    // ✅ Store user details
+    localStorage.setItem("userName", data.name);
+    localStorage.setItem("userRole", data.role);
+    localStorage.setItem("userEmail", email);
 
     alert(`Welcome ${data.name} (${data.role})!`);
+
     
+    if (dbRole === "employee") navigate("/employee-dashboard");
+    else if (dbRole === "hr") navigate("/hr-dashboard");
+    else if (dbRole === "admin") navigate("/admin-dashboard");
   } catch (err) {
     console.error("Login error:", err);
     alert("Network error");
@@ -42,7 +157,11 @@ const Login = () => {
 
   return (
     <div className="login-page">
-          {/* <img src={LoginBG} alt="" /> */}
+        {/* <div><img className="login-img" src={LoginBG} alt="" /></div>   */}
+        {/* <div className="login-img">
+          <img src={LoginBG} alt="" />
+        </div> */}
+        <img className="login-img" src={LoginBG} alt="" />
       <div className="login-form-container">
         <div className="login-box">
           <h2 className="login-title">Welcome Back!</h2>

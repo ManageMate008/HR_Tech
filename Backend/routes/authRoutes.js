@@ -41,4 +41,23 @@ router.post("/login", async (req, res) => {
   }
 });
 
+// Profile Update
+router.put("/update-profile/:email", async (req, res) => {
+  try {
+    const updatedUser = await User.findOneAndUpdate(
+      { email: req.params.email },
+      req.body,
+      { new: true }
+    );
+
+    if (!updatedUser)
+      return res.status(404).json({ message: "User not found" });
+
+    res.json({ message: "Profile updated", user: updatedUser });
+  } catch (err) {
+    console.error("Update error:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 export default router;

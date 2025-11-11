@@ -78,6 +78,7 @@ body {
 
 .sidebar-icon {
   font-size: 18px;
+  
 }
 
 .logout-section {
@@ -202,6 +203,7 @@ small {
   box-shadow: 0 3px 10px var(--shadow);
   animation: fadeIn 0.3s ease-in-out;
   height: 600px;
+  /* width : 800px; */
 }
 
 /* ====== FEATURE FORM ====== */
@@ -532,6 +534,7 @@ small {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  /* align-items: flex-start; */
   margin-bottom: 8px;
 }
 
@@ -550,12 +553,493 @@ small {
   font-size: 1rem;
   font-weight: 600;
   margin: 4px 0;
+  justify-content: flex-start;
 }
-/* .feature-section-task{
-  background: var(--secondary);
+
+.card-value p{
+  justify-content: flex-start;
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
   justify-content: center;
-  border-radius: 4px;
-  width: 1500px;
-  overflow-y: hidden;
-  overflow-x: hidden;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-box {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 350px;
+  animation: fadeIn 0.3s ease;
+}
+
+.edit-form input {
+  width: 100%;
+  padding: 7px;
+  margin: 6px 0 12px;
+  border-radius: 5px;
+  border: 1px solid #aaa;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-cancel {
+  background: #ccc;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+}
+
+.btn-save {
+  background: #0D5EA6;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+}
+
+.btn-edit {
+  background: #0D5EA6;
+  color: white;
+  /* padding: 6px 12px; */
+  padding: 8px 14px;
+  font: 500px;
+  font-size: 14px;
+
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.Payslip-dwn{
+  background: #0D5EA6;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}.profile-name {
+  margin-bottom: 10px;
+  /* font-size: 20px; */
+  font-size: 20px;
+  color: #0D5EA6;
+  font-weight: 600;
+}
+
+.profile-details p {
+  margin: 6px 0;
+  font-size: 25px;
+  color: #333;
+  font: 1em sans-serif;
+}
+
+.payroll-section {
+  width: 340px;
+  height: 80px;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  /* background: #0D5EA6; */
+  background:#fff;
+  /* color: #fff; */
+  padding: 20px;
+  border: 1px solid #e6e6e6;
+  border-radius: 14px;
+  /* box-shadow: 0 10px 25px rgba(0,0,0,0.25); */
+  box-shadow: o 4px 20px rgba(0,0,0,0.08);
+  text-align: left;
+  transition: transform .3s;
+}
+
+/* .payroll-section:hover {
+  transform: translateY(-4px);
 } */
+
+.payroll-section h2 {
+  /* margin-bottom: 18px; */
+  margin: 16px ;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  color: #333;
+}
+
+.payroll-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.payroll-list li {
+  font-size: 15px;
+  margin: 8px 0;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dashed rgba(255,255,255,0.3);
+  padding-bottom: 4px;
+}
+
+.payroll-list li span {
+  font-weight: 600;
+  /* color: #ffebc7; */
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+}
+
+.payslip-btn {
+  /* width: 100%; */
+  width: auto;
+  background: #0b2535;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 15px;
+  transition: 0.3s;
+  color: #fff;
+  justify-content: flex-start;
+}
+
+.payslip-btn:hover {
+  /* background: #ffc107; */
+  /* background: #4caf50 ; */
+  background: #5A9F68 ;
+  /* background: #2ca880 ; */
+
+  /* background: ; */
+  transform: scale(1.03);
+}
+
+
+/* Modal Background */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99;
+}
+
+/* Box */
+.modal-content {
+  background: #fff;
+  width: 360px;
+  padding: 22px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+  /* animation: fadeIn 0.3s ease; */
+}
+
+.modal-content h3 {
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+/* Inputs */
+.modal-content input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #bbb;
+  margin: 8px 0;
+}
+
+/* Actions */
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.modal-buttons .save {
+  background: #0077ff;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.modal-buttons .close {
+  background: #d9534f;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Animation
+@keyframes fadeIn {
+  from { transform: translateY(-10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+} */
+
+.card {
+  background: #ffffff;
+  /* border-radius: 14px; */
+  border-radius: 8px;
+  padding: 18px;
+  cursor: pointer;
+  transition: 0.3s;
+  /* border-left: 5px solid #4a90e2; */
+  /* border-left: 5px solid var(--secondary); */
+  
+}
+
+.card:hover {
+  background: #f0f7ff;
+}
+
+/* Popup Background */
+.holiday-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Popup Box */
+.holiday-popup {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 12px;
+  width: 300px;
+  text-align: center;
+  animation: popupFade 0.3s ease-in-out;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+@keyframes popupFade {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.holiday-popup button {
+  margin-top: 15px;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  background: #4a90e2;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.holiday-popup button:hover {
+  background: #1f6ccf;
+}
+
+.welcome{
+  display: flex;
+  /* background: black; */
+  /* align-items: flex-start; */
+  align-items: center;
+  /* justify-content: flex-start; */
+  justify-content: space-between;
+  /* background: #ffffff; */
+  /* background: yellow; */
+  /* padding: 8px 18px; */
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: 1px solid #e6e6e6;
+  width: 100%; /* adjusts to text size */
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  /* margin-top: -10px;  */
+}
+
+.welcome-box h3 {
+  color: #555;
+  font-size: 28px;
+  width: 180px;
+  flex:1;
+  margin: 0;
+}
+.payroll-details {
+  margin-top: 10px;
+}
+
+.payroll-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  color: #555;
+  border-bottom: 1px dashed #d9d9d9;
+}
+
+.payroll-row:last-child {
+  border-bottom: none;
+}
+
+.total-salary {
+  margin-top: 12px;
+  font-size: 17px;
+  color: #111;
+}
+
+.payroll-modal-overlay {
+  position: fixed;
+   top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.45); 
+   display: flex;
+   flex: 1;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+
+.payroll-modal {
+  background: #fff;
+  padding: 25px;
+  border-radius: 14px;
+  width: 350px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  /* animation: zoomIn 0.25s ease-out; */
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.modal-field {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0;
+}
+
+.modal-field label {
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 4px;
+}
+
+.modal-field input {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.download-btn {
+  width: 100%;
+  margin-top: 12px;
+  padding: 8px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+}
+
+.download-btn:hover {
+  background: #1d4ed8;
+}
+
+.close-btn {
+  width: 100%;
+  margin-top: 8px;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  background: #e53e3e;
+  color: #fff;
+  /* cursor: pointer; */
+}
+
+.close-btn:hover {
+  background: #c53030;
+}
+
+.task-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 cards per row */
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.card-task {
+  min-height: 120px; /* adjust if needed */
+}
+
+.welcome {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.welcome h3 {
+  color: #0D5EA6;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.date-time-box {
+  margin-top: 8px;
+  background: linear-gradient(135deg, #0d5ea6, #63a4ff);
+  display: inline-block;
+  padding: 10px 25px;
+  border-radius: 12px;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 83, 155, 0.4);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.date-time-box p {
+  margin: 3px 0;
+  font-weight: 600;
+}
+
+.day {
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+.date {
+  font-size: 16px;
+}
+
+.time {
+  font-size: 20px;
+  letter-spacing: 2px;
+}
+
+/* Optional small fade in */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.time-display {
+  margin-top: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  background: #e8f3ff;
+  /* color: #0D5EA6; */
+  color: black;
+  padding: 6px 14px;
+  border-radius: 8px;
+  display: inline-block;
+}
